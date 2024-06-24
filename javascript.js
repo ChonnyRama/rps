@@ -1,5 +1,27 @@
-// GENERATE computer choice
-// SET computer choice to return rock, paper, or scissors
+let humanScore = 0;
+let computerScore = 0;
+let gameHistory = ''
+
+let humanScoreBoard = document.querySelector(".current-human");
+let computerScoreBoard = document.querySelector(".current-computer");
+let historyBox = document.querySelector(".history-box");
+const gameButtons = document.querySelector('.game-buttons');
+
+// when a round is played
+// append what player and computer chose as a new div to history box
+
+function updateScores() {
+    humanScoreBoard.textContent = humanScore.toString();
+    computerScoreBoard.textContent = computerScore.toString();
+}
+
+function updateHistory(history) {
+    let newHistory = document.createElement("div");
+    let newHistoryText = `${history}`
+    newHistory.textContent = newHistoryText;
+    historyBox.appendChild(newHistory);
+}
+
 function getComputerChoice() {
     let choice = Math.floor(Math.random() * 3)
     switch (choice) {
@@ -8,22 +30,23 @@ function getComputerChoice() {
         case 1:
             return choice = 'paper';
         case 2:
-            return choice = 'sciccors'
+            return choice = 'scissors'
     }
 }
-// OBTAIN user input
-function getHumanChoice() {
-    let humanChoice = prompt("Choose rock, paper, or scissors");
-    if (!(['rock', 'paper', 'scissors'].includes(humanChoice.toLowerCase()))) {
-        return "Please enter a valid option";
-    }
-    return humanChoice
+
+function displayWinner(winner) {
+    let container = document.querySelector(".container");
+    let winningDisplay = document.createElement("div");
+    winningDisplay.textContent = `${winner} has won the game`;
+    winningDisplay.setAttribute("id", "winner");
+    container.insertBefore(winningDisplay, gameButtons);
 }
-// DISPLAY player score variables
-let humanScore = 0;
-let computerScore = 0;
+
 function playRound(computerChoice, humanChoice) {
-    console.log(`Computer chose ${computerChoice}\nYou chose ${humanChoice}`)
+    let newHistory = document.createElement("div");
+    let gameHistory = `Computer chose ${computerChoice} and You chose ${humanChoice}`
+    newHistory.textContent = gameHistory;
+    historyBox.appendChild(newHistory);
     if (computerChoice == humanChoice) {
         return "It's a tie!"
     }
@@ -54,20 +77,27 @@ function playRound(computerChoice, humanChoice) {
     }
 }
 
-function playGame() {
-    for (let i = 0; i <=5; i++) {
-        console.log(playRound(getComputerChoice(), getHumanChoice()));
-        console.log(`Computer score: ${computerScore}\nHuman score ${humanScore}`);
-    }
-    if (humanScore == computerScore){
-        return console.log("It's a tie");
-    } else if (humanScore < computerScore) {
-        return console.log("Computer wins");
-    } else {
-        return console.log("Human wins");
-    }
-}
-playGame();
-// DETERMINE winner of a single round
+gameButtons.addEventListener('click', (event) => {
+    let target = event.target;
+    const winner = document.getElementById('winner');
+    if (humanScore < 5 && computerScore < 5) {
+        switch (target.id) {
+            case 'rock':
+                updateHistory(playRound(getComputerChoice(), 'rock'));
+                break;
+            case 'paper':
+                updateHistory(playRound(getComputerChoice(), 'paper'));
+                break;
+            case 'scissors':
+                updateHistory(playRound(getComputerChoice(), 'scissors'));
+                break;
+        }
 
-// DETERMINE winner of entire game
+        updateScores()
+    } if (winner === null) {
+        if (humanScore == 5) {
+            displayWinner('Human')
+        } else if (computerScore == 5)
+            displayWinner('Computer')
+    }
+});

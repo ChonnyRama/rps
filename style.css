@@ -1,0 +1,63 @@
+body {
+    text-align: center;
+    background-color: black;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    font-size: 40px;
+}
+
+#winner {
+    border: .15rem solid #F9FAf8;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: royalblue;
+    margin-top: 0;
+}
+
+.game-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.scores {
+    display: flex;
+    gap: 20px;
+    
+}
+
+.score {
+    border: .5rem outset #5c1c86;
+    width: 150px;
+}
+
+.game-history {
+    border: .5rem outset #5c1c86;
+}
+
+img {
+    height: 200px;
+    width: 300px;
+    border: 1rem outset #5c1c86;
+    border-radius: 12px;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
